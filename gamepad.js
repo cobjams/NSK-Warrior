@@ -118,7 +118,11 @@ window.initVirtualGamepad = function() {
     // We only want to prevent native browser touch actions (like long-press haptics)
     // if the user is touching the game canvas or the virtual gamepad controls.
     const isGameCanvas = !!e.target.closest('canvas') || !!e.target.closest('.ejs_canvas');
-    const isGamepadControl = !!e.target.closest('.ejs_virtualGamepad_button') || !!e.target.closest('.ejs_dpad_main');
+    const isGamepadControl = !!e.target.closest('.ejs_virtualGamepad_button') ||
+                             !!e.target.closest('.ejs_dpad_main') ||
+                             !!e.target.closest('.ejs_virtualGamepad_left') ||
+                             !!e.target.closest('.ejs_virtualGamepad_right') ||
+                             !!e.target.closest('.ejs_virtualGamepad_parent');
 
     return isGameCanvas || isGamepadControl;
   }
