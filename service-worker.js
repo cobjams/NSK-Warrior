@@ -9,6 +9,7 @@ const networkFirstFiles = [
     '/styles/main.css',
     '/booklet/booklet.css',
     '/booklet/booklet.js',
+    '/booklet/pages/7.webp',
     '/booklet/pages/2.webp',
     '/version-manager.js',
     '/gamepad.js',
