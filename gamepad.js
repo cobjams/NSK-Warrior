@@ -99,16 +99,30 @@ window.initVirtualGamepad = function() {
   function shouldPreventTouch(e) {
     if (!e.target) return false;
 
+    // Do NOT prevent touch if the user is interacting with the EmulatorJS menu bar, settings, popups, or context menus,
+    // otherwise synthetic 'click' events will not fire on mobile.
+    const isEjsMenuOrPopup = e.target.closest('.ejs_menu_bar') ||
+                             e.target.closest('.ejs_menu_parent') ||
+                             e.target.closest('.ejs_context_menu') ||
+                             e.target.closest('.ejs_settings_parent') ||
+                             e.target.closest('.ejs_popup_container') ||
+                             e.target.closest('.ejs_popup_box') ||
+                             e.target.closest('.ejs_cheat_parent') ||
+                             e.target.closest('.ejs_volume_parent') ||
+                             e.target.closest('.ejs_setting_menu');
+
+    if (isEjsMenuOrPopup) {
+      return false;
+    }
+
     // We only want to prevent native browser touch actions (like long-press haptics)
     // if the user is touching the game canvas or the virtual gamepad controls.
-    let isGameCanvas = e.target.closest('#game');
-    const isGamepadControl = e.target.closest('.ejs_virtualGamepad_button') || e.target.closest('.ejs_dpad_main');
-
-    // Do NOT prevent touch if the user is interacting with the EmulatorJS menu bar or popups,
-    // otherwise synthetic 'click' events will not fire on mobile.
-    if (e.target.closest('.ejs_menu_bar') || e.target.closest('.ejs_menu_parent') || e.target.closest('.ejs_context_menu')) {
-        isGameCanvas = false;
-    }
+    const isGameCanvas = !!e.target.closest('canvas') || !!e.target.closest('.ejs_canvas');
+    const isGamepadControl = !!e.target.closest('.ejs_virtualGamepad_button') ||
+                             !!e.target.closest('.ejs_dpad_main') ||
+                             !!e.target.closest('.ejs_virtualGamepad_left') ||
+                             !!e.target.closest('.ejs_virtualGamepad_right') ||
+                             !!e.target.closest('.ejs_virtualGamepad_parent');
 
     return isGameCanvas || isGamepadControl;
   }

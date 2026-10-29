@@ -161,8 +161,16 @@ document.body.addEventListener('pointerdown', (e) => {
         e.target.closest('.select_button') || // The Version/Start/Continue buttons
         e.target.closest('.save-slot-container') || // The Dropdown menus
         e.target.closest('#button-wrapper') || // The Manual icon itself (let it handle its own click)
+        e.target.closest('#custom-modal-overlay') || // Custom modal overlay
         e.target.closest('.ejs_context_menu') || // EmulatorJS specific menus
         e.target.closest('.ejs_menu_bar') || // EmulatorJS bars
+        e.target.closest('.ejs_menu_parent') || // EmulatorJS menu parents
+        e.target.closest('.ejs_settings_parent') || // EmulatorJS settings menus
+        e.target.closest('.ejs_popup_container') || // EmulatorJS popups/dialogs
+        e.target.closest('.ejs_popup_box') || // EmulatorJS popup boxes
+        e.target.closest('.ejs_cheat_parent') || // EmulatorJS cheat popups
+        e.target.closest('.ejs_volume_parent') || // EmulatorJS volume popups
+        e.target.closest('.ejs_setting_menu') || // EmulatorJS setting submenus
         e.target.closest('.ejs_virtualGamepad_left') || // Left Gamepad controls
         e.target.closest('.ejs_virtualGamepad_right'); // Right Gamepad controls
 
