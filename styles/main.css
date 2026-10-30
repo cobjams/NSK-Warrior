@@ -58,7 +58,8 @@ html {
 
 #custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(5px); z-index: 9999; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px); opacity: 0; pointer-events: none; transition: opacity .3s ease; -webkit-overflow-scrolling: touch; }
 #custom-modal-overlay.visible { opacity: 1; pointer-events: auto; }
-#custom-modal { background: rgba(50,0,0,.9); border: 1px solid #a00000; border-radius: 20px; padding: 20px; width: min(500px, 92vw); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); margin: auto 0; overflow-y: auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.8); transform: scale(.9); transition: transform .3s cubic-bezier(.175,.885,.32,1.275); -webkit-overflow-scrolling: touch; }
+#custom-modal { background: rgba(50,0,0,.9); border: 1px solid #a00000; border-radius: 20px; padding: 20px; width: min(300px, 100%); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); margin: auto 0; overflow-y: auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.8); transform: scale(.9); transition: transform .3s cubic-bezier(.175,.885,.32,1.275); -webkit-overflow-scrolling: touch; }
+#custom-modal:has(.manual-content-wrapper) { width: min(500px, 92vw); }
 #custom-modal-overlay.visible #custom-modal { transform: scale(1); }
 .modal-btn, #update-button { background: #444; color: white; border: none; outline: none; -webkit-tap-highlight-color: transparent; padding: 10px 20px; border-radius: 20px; font-size: 1em; font-weight: bold; cursor: pointer; margin: 10px 5px 0; }
 .modal-btn.confirm { background: #a00000; }
@@ -151,16 +152,6 @@ html {
 }
 .manual-section li {
   margin-bottom: 4px;
-}
-.manual-img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: block;
-  border: 1px solid #444;
 }
 
 /* Overrides for EmulatorJS virtual gamepad to eliminate mobile haptics */
