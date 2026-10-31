@@ -52,9 +52,12 @@ html {
 
 .slot-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #444; }
 .slot-row:last-child { border: none; }
-.ejs_small_screen #ejs-custom-exit span.ejs_menu_text { margin-left: 33%; }
-.ejs_small_screen #ejs-custom-exit.ejs_menu_button svg { opacity: .7; }
-#ejs-custom-exit span.ejs_menu_text_right { position: absolute; height: 14px; width: 25px; font-size: 14px; }
+.ejs_small_screen #ejs-custom-exit span.ejs_menu_text,
+.ejs_small_screen #ejs-custom-manual span.ejs_menu_text { margin-left: 33%; }
+.ejs_small_screen #ejs-custom-exit.ejs_menu_button svg,
+.ejs_small_screen #ejs-custom-manual.ejs_menu_button svg { opacity: .7; }
+#ejs-custom-exit span.ejs_menu_text_right,
+#ejs-custom-manual span.ejs_menu_text_right { position: absolute; height: 14px; width: 25px; font-size: 14px; }
 
 #custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(5px); z-index: 9999; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px); opacity: 0; pointer-events: none; transition: opacity .3s ease; -webkit-overflow-scrolling: touch; }
 #custom-modal-overlay.visible { opacity: 1; pointer-events: auto; }
