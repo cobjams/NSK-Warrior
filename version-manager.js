@@ -1270,9 +1270,6 @@ function injectExitButton() {
           <span class="ejs_menu_text">Manual</span>`;
         
         manualBtn.onclick = async () => {
-          if (window.EJS_emulator) {
-            window.EJS_emulator.pause();
-          }
           if (typeof window.showManualModal === 'function') {
             window.showManualModal();
           } else if (typeof window.showModal === 'function' && window.MANUAL_HTML_CONTENT) {
