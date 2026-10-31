@@ -225,6 +225,7 @@ const MANUAL_HTML_CONTENT = `
       border: 1px solid #333;
       padding: clamp(0.3rem, 1.5vw, 0.6rem) clamp(0.2rem, 1vw, 0.8rem);
       text-align: center;
+      color: #444;
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
