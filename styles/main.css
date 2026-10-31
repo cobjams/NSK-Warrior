@@ -52,13 +52,17 @@ html {
 
 .slot-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #444; }
 .slot-row:last-child { border: none; }
-.ejs_small_screen #ejs-custom-exit span.ejs_menu_text { margin-left: 33%; }
-.ejs_small_screen #ejs-custom-exit.ejs_menu_button svg { opacity: .7; }
-#ejs-custom-exit span.ejs_menu_text_right { position: absolute; height: 14px; width: 25px; font-size: 14px; }
+.ejs_small_screen #ejs-custom-exit span.ejs_menu_text,
+.ejs_small_screen #ejs-custom-manual span.ejs_menu_text { margin-left: 33%; }
+.ejs_small_screen #ejs-custom-exit.ejs_menu_button svg,
+.ejs_small_screen #ejs-custom-manual.ejs_menu_button svg { opacity: .7; }
+#ejs-custom-exit span.ejs_menu_text_right,
+#ejs-custom-manual span.ejs_menu_text_right { position: absolute; height: 14px; width: 25px; font-size: 14px; }
 
 #custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(5px); z-index: 9999; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px); opacity: 0; pointer-events: none; transition: opacity .3s ease; -webkit-overflow-scrolling: touch; }
 #custom-modal-overlay.visible { opacity: 1; pointer-events: auto; }
 #custom-modal { background: rgba(50,0,0,.9); border: 1px solid #a00000; border-radius: 20px; padding: 20px; width: min(300px, 100%); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); margin: auto 0; overflow-y: auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.8); transform: scale(.9); transition: transform .3s cubic-bezier(.175,.885,.32,1.275); -webkit-overflow-scrolling: touch; }
+#custom-modal:has(.manual-content-wrapper) { width: min(500px, 92vw); }
 #custom-modal-overlay.visible #custom-modal { transform: scale(1); }
 .modal-btn, #update-button { background: #444; color: white; border: none; outline: none; -webkit-tap-highlight-color: transparent; padding: 10px 20px; border-radius: 20px; font-size: 1em; font-weight: bold; cursor: pointer; margin: 10px 5px 0; }
 .modal-btn.confirm { background: #a00000; }
@@ -97,6 +101,61 @@ html {
 
 /* Dynamic modal content */
 .modal-image { max-width: 100%; max-height: 400px; margin: 15px 0; border-radius: 4px; }
+
+/* Manual Modal Styles */
+.manual-content-wrapper {
+  text-align: left;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  max-width: 100%;
+}
+.manual-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #fff;
+  font-size: 1.3em;
+  border-bottom: 1px solid #a00000;
+  padding-bottom: 8px;
+}
+.manual-content-wrapper details {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #666;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  transition: background-color 0.2s ease;
+}
+.manual-content-wrapper details[open] {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: #a00000;
+}
+.manual-content-wrapper summary {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+  outline: none;
+  padding: 4px 0;
+  color: #ffcccc;
+}
+.manual-section {
+  padding-top: 8px;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+.manual-section h3 {
+  margin-top: 5px;
+  margin-bottom: 8px;
+  font-size: 1em;
+  color: #fff;
+}
+.manual-section ul, .manual-section ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.manual-section li {
+  margin-bottom: 4px;
+}
 
 /* Overrides for EmulatorJS virtual gamepad to eliminate mobile haptics */
 #game,

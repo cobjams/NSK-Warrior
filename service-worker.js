@@ -13,6 +13,7 @@ const networkFirstFiles = [
     '/booklet/pages/2.webp',
     '/version-manager.js',
     '/gamepad.js',
+    '/manual.js',
     '/loading-ring.js',
     '/images/bearing.gif',
     '/versions/keen-fine/RPG Maker (USA).state'
@@ -28,6 +29,7 @@ const urlsToCache = [
     '/styles/main.css',
     '/version-manager.js',
     '/gamepad.js',
+    '/manual.js',
     '/loading-ring.js',
     '/images/bearing.gif',
     '/api/serve-game/scph5501.bin?key=bios',

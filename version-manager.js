@@ -637,7 +637,11 @@ function showModal(message, type = 'alert') {
     if (type === 'info') {
       msgEl.style.display = 'none';
       infoEl.style.display = 'block';
-      infoEl.innerText = messageText;
+      if (typeof messageText === 'string' && messageText.includes('<')) {
+        infoEl.innerHTML = messageText;
+      } else {
+        infoEl.innerText = messageText;
+      }
       
       // Add image if provided
       if (imageUrl) {
@@ -646,6 +650,10 @@ function showModal(message, type = 'alert') {
         imgElement.className = 'modal-image';
         infoEl.appendChild(imgElement);
       }
+    } else {
+      infoEl.innerHTML = '';
+      infoEl.style.display = 'none';
+      msgEl.style.display = 'block';
     }
     
     overlay.classList.add('visible');
@@ -1238,65 +1246,84 @@ async function renderSaveSlots(verId, container) {
 // --- 5. EMULATOR & GAME LOGIC ---
 
 /**
- * Injects a custom "Exit" button into the EmulatorJS toolbar.
+ * Injects custom toolbar buttons (Manual, Exit) into the EmulatorJS toolbar.
  */
 function injectExitButton() {
-  // We use a timer because the Emulator builds its UI dynamically after load
   let attempts = 0;
   const findToolbar = setInterval(() => {
     attempts++;
-    // Look for the main button container in EJS 4.x
     const toolbar = document.querySelector('.ejs_menu_bar');
     
     if (toolbar) {
       clearInterval(findToolbar);
       
-      // Prevent duplicate buttons if function runs twice
-      if (document.getElementById('ejs-custom-exit')) return;
-      
-      // Create the button wrapper
-      const btn = document.createElement('div');
-      btn.id = 'ejs-custom-exit';
-      btn.className = 'ejs_menu_button'; // Re-use EJS styling class
-      
-      btn.innerHTML = `
-        <svg viewBox="0 0 460 460"><path style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(255,255,255);stroke-opacity:1;stroke-miterlimit:4;" d="M 14.000061 7.636414 L 14.000061 4.5 C 14.000061 4.223877 13.776123 3.999939 13.5 3.999939 L 4.5 3.999939 C 4.223877 3.999939 3.999939 4.223877 3.999939 4.5 L 3.999939 19.5 C 3.999939 19.776123 4.223877 20.000061 4.5 20.000061 L 13.5 20.000061 C 13.776123 20.000061 14.000061 19.776123 14.000061 19.5 L 14.000061 16.363586 " transform="matrix(21.333333,0,0,21.333333,0,0)"/><path style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(255,255,255);stroke-opacity:1;stroke-miterlimit:4;" d="M 9.999939 12 L 21 12 M 21 12 L 18.000366 8.499939 M 21 12 L 18 15.500061 " transform="matrix(21.333333,0,0,21.333333,0,0)"/></svg>
-      <span class="ejs_menu_text">Exit</span>`;
-      
-      // Click Handler (Uses our custom showModal)
-      btn.onclick = async () => {
-        // 1. Pause (Optional, usually good practice)
-        if (window.EJS_emulator) {
-          window.EJS_emulator.pause();
-        }
+      // Inject Manual button if not already present
+      if (!document.getElementById('ejs-custom-manual')) {
+        const manualBtn = document.createElement('div');
+        manualBtn.id = 'ejs-custom-manual';
+        manualBtn.className = 'ejs_menu_button';
         
-        // 2. Determine Message
-        const msg = (window.EJS_emulator.settings['save-state-location'] !== 'download') ?
-          "Exit Game? Progress will be saved." :
-          "Exit Game? Progress will NOT be saved.";
+        manualBtn.innerHTML = `
+          <svg viewBox="0 0 512 512">
+            <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+          </svg>
+          <span class="ejs_menu_text">Manual</span>`;
         
-        // 3. Confirm
-        const doExit = await showModal(msg, 'confirm');
-        
-        if (doExit) {
-          if (window.EJS_emulator.settings['save-state-location'] !== 'download') {
-            try { await performManualSave(); } catch (e) { console.error(e); }
+        manualBtn.onclick = async () => {
+          if (typeof window.showManualModal === 'function') {
+            window.showManualModal();
+          } else if (typeof window.showModal === 'function' && window.MANUAL_HTML_CONTENT) {
+            await showModal({ text: window.MANUAL_HTML_CONTENT }, 'info');
           }
-          window.location.reload(); // Graceful Exit
+        };
+
+        const exitBtn = document.getElementById('ejs-custom-exit');
+        if (exitBtn) {
+          toolbar.insertBefore(manualBtn, exitBtn);
         } else {
-          // Resume if canceled
-          if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-            window.EJS_emulator.play();
-          }
+          toolbar.appendChild(manualBtn);
         }
-      };
-      
-      // Append to the toolbar
-      toolbar.appendChild(btn);
-      console.debug("Custom Exit Button injected.");
+        console.debug("Custom Manual Button injected.");
+      }
+
+      // Inject Exit button if not already present
+      if (!document.getElementById('ejs-custom-exit')) {
+        const btn = document.createElement('div');
+        btn.id = 'ejs-custom-exit';
+        btn.className = 'ejs_menu_button';
+
+        btn.innerHTML = `
+          <svg viewBox="0 0 460 460"><path style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(255,255,255);stroke-opacity:1;stroke-miterlimit:4;" d="M 14.000061 7.636414 L 14.000061 4.5 C 14.000061 4.223877 13.776123 3.999939 13.5 3.999939 L 4.5 3.999939 C 4.223877 3.999939 3.999939 4.223877 3.999939 4.5 L 3.999939 19.5 C 3.999939 19.776123 4.223877 20.000061 4.5 20.000061 L 13.5 20.000061 C 13.776123 20.000061 14.000061 19.776123 14.000061 19.5 L 14.000061 16.363586 " transform="matrix(21.333333,0,0,21.333333,0,0)"/><path style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(255,255,255);stroke-opacity:1;stroke-miterlimit:4;" d="M 9.999939 12 L 21 12 M 21 12 L 18.000366 8.499939 M 21 12 L 18 15.500061 " transform="matrix(21.333333,0,0,21.333333,0,0)"/></svg>
+        <span class="ejs_menu_text">Exit</span>`;
+
+        btn.onclick = async () => {
+          if (window.EJS_emulator) {
+            window.EJS_emulator.pause();
+          }
+
+          const msg = (window.EJS_emulator.settings['save-state-location'] !== 'download') ?
+            "Exit Game? Progress will be saved." :
+            "Exit Game? Progress will NOT be saved.";
+
+          const doExit = await showModal(msg, 'confirm');
+
+          if (doExit) {
+            if (window.EJS_emulator.settings['save-state-location'] !== 'download') {
+              try { await performManualSave(); } catch (e) { console.error(e); }
+            }
+            window.location.reload();
+          } else {
+            if (window.EJS_emulator && window.EJS_emulator.gameManager) {
+              window.EJS_emulator.play();
+            }
+          }
+        };
+
+        toolbar.appendChild(btn);
+        console.debug("Custom Exit Button injected.");
+      }
     }
     
-    // Stop trying after 10 seconds
     if (attempts > 20) clearInterval(findToolbar);
   }, 500);
 }
