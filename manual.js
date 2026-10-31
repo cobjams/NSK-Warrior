@@ -8,7 +8,7 @@ const MANUAL_HTML_CONTENT = `
 <div class="manual-content-wrapper">
   <h2 class="manual-title">NSK WARRIOR MANUAL</h2>
 
-  <details open>
+  <details>
     <summary>An Adventure of Janitorial Intrigue Begins</summary>
     <div class="manual-section">
       <p>Tim, a janitor, arrives early to work one morning, eager to begin his day at the NSK ball bearing factory. His enthusiasm quickly fades, though, once he sets foot inside the forbidding front entrance doors.</p>
