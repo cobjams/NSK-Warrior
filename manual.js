@@ -182,7 +182,128 @@ const MANUAL_HTML_CONTENT = `
   <details>
     <summary>Appendix</summary>
     <div class="manual-section">
-      <h4>Moves Class</h4>
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f1ea;
+      color: #222;
+      padding: clamp(0.75rem, 4vw, 2rem);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .dossier-card {
+      background-color: #fcfaf5;
+      border: 2px solid #992222;
+      padding: clamp(0.85rem, 3.5vw, 2rem);
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+      width: 100%;
+    }
+    h2 {
+      color: #992222;
+      margin-top: 0;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 1rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      table-layout: fixed;
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: clamp(0.3rem, 1.5vw, 0.6rem) clamp(0.2rem, 1vw, 0.8rem);
+      text-align: center;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    thead th {
+      background-color: #992222;
+      color: #fff;
+      font-weight: bold;
+    }
+    tbody th {
+      background-color: #e9e4d8;
+      text-align: left;
+      font-weight: bold;
+      padding-left: clamp(0.35rem, 1.5vw, 0.8rem);
+    }
+    .adv {
+      font-weight: bold;
+      color: #1b6d2e;
+      background-color: #eaf6ed;
+    }
+    .disadv {
+      color: #992222;
+    }
+    p.caption {
+      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+      line-height: 1.5;
+      color: #444;
+      margin-bottom: 0;
+    }
+  </style>
+  <div class="dossier-card">
+    <h2>Moves Class Chart</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2">Monster Class</th>
+            <th colspan="4">Main Character's Moves Class</th>
+          </tr>
+          <tr>
+            <th>Grease</th>
+            <th>Flame</th>
+            <th>Soap</th>
+            <th>None</th>
+          </tr>
+          <tr>
+            <th>Grease</th>
+            <td class="disadv">25%</td>
+            <td class="disadv">50%</td>
+            <td class="adv">150%</td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <th>Flame</th>
+            <td class="adv">150%</td>
+            <td class="disadv">25%</td>
+            <td class="disadv">50%</td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <th>Soap</th>
+            <td class="disadv">50%</td>
+            <td class="adv">150%</td>
+            <td class="disadv">25%</td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <th>None</th>
+            <td>100%</td>
+            <td>100%</td>
+            <td>100%</td>
+            <td>100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">
+      This chart shows the relationship between Monster Classes and percent of damage from the 4 classes of Moves. If the Monster's class is "none" then there is no class of Move that has an advantage. For example: If a monster's class is Grease, then a Soap class Move would do the most damage. (Think "paper, scissors, rock")
+    </p>
+  </div>
       <p>This cart shows the relationship between Monster Classes and percent of damage from the 4 classes of Moves. If the Monster's class is "none" then there is no class of Move that has an advantage. For example: If a monster's class is Grease, then a Soap class Move would do the most damage. (Think "paper, scissors, rock")</p>
       <h4>Understanding Your Status</h4>
       <ul>
